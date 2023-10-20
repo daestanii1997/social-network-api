@@ -1,0 +1,15 @@
+{
+  "name": "social network API",
+  "version": "1.0.1",
+  "description": "api for social network site",
+  "main": "server.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index",
+    "seed": "node utils/seed"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.6.3"
+  }
+}
