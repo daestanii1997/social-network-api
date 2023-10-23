@@ -4,7 +4,7 @@
   "description": "api for social network site",
   "main": "server.js",
   "scripts": {
-    "start": "node index",
+    "start": "node server",
     "dev": "nodemon index",
     "seed": "node utils/seed"
   },
