@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+// requiring route files
 const thoughtRoutes = require('./thoughtroutes');
 const userRoutes = require('./userRoutes');
 

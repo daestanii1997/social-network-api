@@ -1,4 +1,4 @@
-const { Thought, Reaction } = require('../models');
+const { Thought, Reaction, User } = require('../models');
 
 module.exports = {
     async getThoughts(req, res) {
@@ -23,8 +23,19 @@ module.exports = {
     },
     async createThought(req, res) {
         try {
+            const dbUserData = await User.findOne({ _id: req.body.userId })
+            if (!dbUserData) {
+                return res.status(404).json({ message: 'no user found' });
+            }
+
             const dbThoughtData = await Thought.create(req.body);
-            res.json(dbThoughtData);
+            const updateUser = await User.findOneAndUpdate(
+                { _id: req.body.userId },
+                { $addToSet: { thoughts: dbThoughtData._id }},
+                { runValidators: true, new: true }
+            )
+
+            res.json(updateUser);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -60,8 +71,7 @@ module.exports = {
         try {
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId},
-                { $addToSet: { reactions: req.body }},
-                { runValidators: true, new: true }
+                { $addToSet: { reactions: req.body }}
             );
 
             if (!thought) {
